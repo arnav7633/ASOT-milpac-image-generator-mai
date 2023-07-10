@@ -1,0 +1,31 @@
+{
+  "name": "milpac-image",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "@canvas-fonts/times-new-roman": "^1.0.4",
+    "body-parser": "^1.20.2",
+    "canvas": "^2.11.2",
+    "custom-soffice-to-pdf": "^1.0.0",
+    "docxtemplater": "^3.37.11",
+    "express": "^4.18.2",
+    "file-format-converter": "github:arnav7633/FileFormatConverter",
+    "glob": "^10.2.1",
+    "gm": "^1.25.0",
+    "node.js": "^0.0.1-security",
+    "nodejs-pptx": "^1.2.4",
+    "pdf-img-convert": "^1.2.1",
+    "pizzip": "^3.1.4",
+    "ppt-png": "^2.0.0",
+    "pptxgenjs": "^3.12.0",
+    "src": "^1.0.0",
+    "unoconv": "^0.1.2"
+  }
+}

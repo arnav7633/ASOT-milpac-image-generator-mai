@@ -1,0 +1,88 @@
+<!DOCTYPE html<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Certificate Generator</title>
+    <style>
+        .container{
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+        }
+        .input{
+            margin: 10px;
+            padding: 10px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Certificate Generator</h1>
+        <div class="input">
+            <label for="date">Date</label>
+            <input type="text" name="date" id="date">
+        </div>
+        <div class="input">
+            <label for="name">Name</label>
+            <input type="text" name="name" id="name">
+        </div>
+        <div class="input">
+            <label for="signaturer">Signaturer</label>
+            <input type="text" name="signaturer" id="signaturer">
+        </div>
+        <div class="input">
+            <label for="certType">Certificate Type, Available certificates reenlist,ltcol,major,captain,lieutenant,group-captain,wing-commander,squadron-leader,flt,wo1,wo2,sgt,cpl,lcpl,pte,enlist</label>
+            <input type="text" name="certType" id="certType">
+        </div>
+        <button id="generate">Generate Certificate</button>
+        <a href="/">Milpacs</a>
+        <div id="certificate"></div>
+
+  <div id="imageContainer"></div>
+    </div>
+    <script>
+        const generateButton = document.querySelector('#generate');
+        const certificateDiv = document.querySelector('#certificate');
+        const dateInput = document.querySelector('#date');
+        const nameInput = document.querySelector('#name');
+        const signaturerInput = document.querySelector('#signaturer');
+        const certTypeInput = document.querySelector('#certType');
+
+        generateButton.addEventListener('click', () => {
+            const date = dateInput.value;
+            const name = nameInput.value;
+            const signaturer = signaturerInput.value;
+            const certType = certTypeInput.value;
+            fetch('/create-cert', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({
+                    date: date,
+                    name: name,
+                    signaturer: signaturer,
+                    cert: certType
+                })
+            })
+             .then(response => response.blob())
+      .then(imageBlob => {
+        // Create a URL for the image blob
+        var imageUrl = URL.createObjectURL(imageBlob);
+        // Create an <img> element
+        var imgElement = document.createElement("img");
+        console.log(imageUrl)
+
+        // Set the source of the image to the generated image
+        imgElement.src = imageUrl;
+
+        // Append the image element to the "imageContainer" div
+        document.getElementById("imageContainer").appendChild(imgElement);
+      })
+      .catch(error => {
+        console.error('Error:', error);
+      });
+        })
+    </script>
+</body>
+</html>

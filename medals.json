@@ -1,0 +1,15 @@
+{
+  "first_line": ["Campaign", "Campaign1", "Campaign2", "Campaign3", "Campaign4", "Campaign5", "Campaign6", "Campaign7", "1 Year", "2 Year", "3 Year"],
+  "second_line": ["4 Year", "Aviation", "Medical", "Protagonist"],
+  "third_line": [
+    "Junior Leadership",
+    "Senior Leadership",
+    "Atlas",
+    "Instructor"
+  ],
+  "fourth_line": ["Watchman", "Architect", "Broken Lance"],
+  "fifth_line": ["Diplomat", "Public Relation", "Group Development"],
+  "sixth_line": ["Founders", "Gallantry"],
+  "seventh_line": ["Cross Of Valour", "Star Of Courage"],
+  "eighth_line": ["Beyond"]
+}
