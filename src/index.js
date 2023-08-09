@@ -6,8 +6,6 @@ const medalJSON = require("../medals.json");
 canvas.registerFont(require("@canvas-fonts/times-new-roman"), {
   family: "Times New Roman",
 });
-
-
 const main = async (data) => {
   try {
     const canvas = createCanvas(1398, 1000);
