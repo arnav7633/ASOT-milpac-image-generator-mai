@@ -1,6 +1,6 @@
 const PizZip = require("pizzip");
 const Docxtemplater = require("docxtemplater");
-var pdf2img = require('pdf-img-convert');
+
 const fs = require("fs");
 const path = require("path");
 const converter = require("file-format-converter");
@@ -25,28 +25,19 @@ async function main(data) {
     type: "nodebuffer",
     // compression: DEFLATE adds a compression step.
     // For a 50MB output document, expect 500ms additional CPU time
+    compression: "DEFLATE",
   });
 
   // buf is a nodejs Buffer, you can either write it to a
   // file or res.send it with express for example.
   fs.writeFileSync(path.resolve(__dirname, "../output.pptx"), buf);
-  const imgData = await converter.PowerPointToPdf(
-   __dirname +  "/../output.pptx",
-   __dirname +  "/../certs/"
+  const imgData = await converter.powerpointToImages(
+    __dirname + "/../output.pptx",
+    __dirname + "/../certs/"
   );
-const file = fs.readdirSync(path.resolve(__dirname, "../certs/"))
-// Both HTTP and local paths are supported
-console.log(file)
-const outputImages = await pdf2img.convert(path.resolve(__dirname, '../certs/') +"/"+ file[0]);
-
-// From here, the images can be used for other stuff or just saved if that's required:
-
-    for (i = 0; i < outputImages.length; i++)
-        fs.writeFile(path.resolve(__dirname, "../certs/")+ "/" + "output"+i+".png", outputImages[i], function (error) {
-          if (error) { console.error("Error: " + error); }
-        });
-  
+  for (const img of imgData) {
+    console.log(img);
+  }
 }
 module.exports = main;
 //main({ name: "Private Fulcrum", signaturer: "MAJ Trew", date: "3 July 2023" });
-

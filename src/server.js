@@ -1,4 +1,3 @@
-const fs = require("fs");
 const express = require("express");
 const app = express();
 const port = 42069;
@@ -7,6 +6,8 @@ const jsonParser = bodyParser.json();
 const imageGenerator = require("./index.js");
 const path = require("path");
 const certGenerator = require("./cert");
+const fs = require("fs");
+const generate_box = require("./box.js");
 // create application/x-www-form-urlencoded parser
 const urlencodedParser = bodyParser.urlencoded({ extended: false });
 app.get("/", (req, res) => {
@@ -41,7 +42,7 @@ app.post("/update", jsonParser, async (req, res) => {
     .status(200)
     .sendFile(path.resolve(__dirname + `/../milpac/${data.name}.png`));
 });
-app.post("/create-cert", jsonParser, async (req, res) => {
+app.post("/create-cert", async (req, res) => {
   let data = req.body;
   console.log(data);
   let errored = false;
@@ -62,27 +63,30 @@ app.post("/create-cert", jsonParser, async (req, res) => {
     lcpl: 13,
     pte: 14,
     enlist: 15,
-    "group-captain": 16,
+    "group-captain":16,
   };
-  const slide = SlideNumbers[data.cert];
-  await certGenerator(data);
-  await new Promise((resolve) => setTimeout(resolve, 10000));
-  res
-    .status(200)
-    .sendFile(path.resolve(__dirname + `/../certs/output${slide - 1}.png`));
-  console.log(path.resolve(__dirname, "/../certs/"));
-  await new Promise((resolve) => setTimeout(resolve, 5000));
-  fs.copyFileSync(
-    path.resolve(__dirname + `/../certs/output${slide - 1}.png`),
-    path.resolve(__dirname + `/../certificates/${data.name} - ${data.cert}.png`)
-  );
-  fs.rmSync(path.resolve(__dirname + "/../certs/"), {
-    recursive: true,
-    force: true,
+  const slide = SlideNumbers[date.cert];
+  await certGenerator(date);
+});
+app.get("/get-medals", (req, res) => {
+  res.send({
+    files: fs.readdirSync(__dirname + "/../medal-box-images/medals"),
   });
 });
-app.get("/certificates", (req, res) => {
-  res.sendFile(path.resolve(__dirname + "/certificate.html"));
+app.get("/box", (req, res) => {
+  res.sendFile(path.resolve(__dirname + "/box.html"));
+});
+app.post("/generate-box", jsonParser, async (req, res) => {
+  let data = req.body;
+  console.log(data);
+  let errored = false;
+  if (!data) return res.sendStatus(400);
+  await generate_box(data);
+  res
+    .status(200)
+    .sendFile(
+      path.resolve(__dirname + `/../medal-box-images/boxes/${data.name}.png`)
+    );
 });
 app.listen(port, () => {
   console.log(`App listening at http://localhost:${port}`);
