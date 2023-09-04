@@ -3,10 +3,9 @@
   <head>
     <title>Medal Box</title>
     <select id="dropdown" multiple="true"></select>
-    
+
     <label for="name">Name:</label>
     <input type="text" id="name" placeholder="Enter text here" />
-    <div id="imageContainer"></div>
     <script>
       fetch("/get-medals", {
         method: "GET",
@@ -68,6 +67,7 @@
             });
         });
     </script>
+    <br>
     <button id="gen">Generate</button>
     <a href="/">Milpacs</a>
     <a href="/certificates"> Certificates</a>
@@ -79,4 +79,7 @@
       }
     </style>
   </head>
+  <body>
+    <div id="imageContainer"></div>
+  </body>
 </html>
